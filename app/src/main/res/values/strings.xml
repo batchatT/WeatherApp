@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="weather">Weather</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="humidity">Humidity: %d</string>
+    <string name="pressure">Pressure: %d</string>
+    <string name="windspeed">Wind speed: %.2f</string>
+
+</resources>
