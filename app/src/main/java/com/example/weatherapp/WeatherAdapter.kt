@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.text.StringBuilder
 
-class WeatherAdapter(weatherList: ArrayList<WeatherInfo>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
+class WeatherAdapter(weatherList: List<WeatherInfo>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     private lateinit var onWeatherListener : OnWeatherListener
 
-    fun setOnWeatherLIstener(onWeatherListener: OnWeatherListener){
+    fun setOnWeatherClickListener(onWeatherListener: OnWeatherListener){
         this.onWeatherListener = onWeatherListener
     }
 
