@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.weatherapp.databinding.FragmentDetailedWeatherInfoBinding
 import java.lang.StringBuilder
 
-class DetailedWeatherInfo : Fragment() {
+class DetailedWeatherInfoFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailedWeatherInfoBinding
 
@@ -28,18 +28,18 @@ class DetailedWeatherInfo : Fragment() {
     private fun getBundle(){
         val bundle = this.arguments
         if (bundle != null) {
-            val weather = bundle.getParcelable<WeatherInfo>("Weather")
+            val weather = bundle.getParcelable<WeatherModel>("Weather")
             val temp = StringBuilder("")
             if (weather != null) {
-                if(weather.degree > 0){
+                if(weather.weather[0].mainInfo.degree > 0){
                     temp.append("+")
                 }
-                temp.append(weather.degree).append("°C")
-                binding.cityText.text = weather.city
+                temp.append(weather.weather[0].mainInfo.degree).append("°C")
+                binding.cityText.text = weather.weather[0].city
                 binding.temperature.text = temp
-                binding.humidity.text = getString(R.string.humidity, weather.humidity)
-                binding.pressure.text = getString(R.string.pressure, weather.pressure)
-                binding.windSpeed.text = getString(R.string.windspeed, weather.windSpeed)
+                binding.humidity.text = getString(R.string.humidity, weather.weather[0].mainInfo.humidity)
+                binding.pressure.text = getString(R.string.pressure, weather.weather[0].mainInfo.pressure)
+                binding.windSpeed.text = getString(R.string.windspeed, weather.weather[0].windInfo.windSpeed)
             }
         }
     }

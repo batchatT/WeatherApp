@@ -6,7 +6,7 @@
     app:startDestination="@id/commonWeatherInfo">
     <fragment
         android:id="@+id/commonWeatherInfo"
-        android:name="com.example.weatherapp.commonWeather.CommonWeatherInfo"
+        android:name="com.example.weatherapp.commonWeather.CommonWeatherInfoFragment"
         android:label="fragment_common_weather_info"
         tools:layout="@layout/fragment_common_weather_info" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedWeatherInfo"
-        android:name="com.example.weatherapp.DetailedWeatherInfo"
+        android:name="com.example.weatherapp.DetailedWeatherInfoFragment"
         android:label="fragment_detailed_weather_info"
         tools:layout="@layout/fragment_detailed_weather_info" />
 </navigation>
