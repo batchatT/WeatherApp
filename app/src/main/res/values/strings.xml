@@ -7,6 +7,6 @@
     <string name="windspeed">Wind speed: %.2f</string>
     <string name="app">APP</string>
     <string name="find_city">Add City</string>
-    <string name="warning_text">There are no city with that name!</string>
+    <string name="error_text">Oooops! Something went wrong!</string>
     <string name="ok">OK</string>
 </resources>

@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import com.example.weatherapp.databinding.FragmentDetailedWeatherInfoBinding
 import java.lang.StringBuilder
 
+private const val WEATHER_BUNDLE_KEY = "Weather"
+
 class DetailedWeatherInfoFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailedWeatherInfoBinding
@@ -27,10 +29,10 @@ class DetailedWeatherInfoFragment : Fragment() {
 
     private fun getBundle(){
         val bundle = this.arguments
-        if (bundle != null) {
-            val weather = bundle.getParcelable<WeatherModel>("Weather")
+        bundle?.let {
+            val weather = bundle.getParcelable<WeatherModel>(WEATHER_BUNDLE_KEY)
             val temp = StringBuilder("")
-            if (weather != null) {
+            weather?.let{
                 if(weather.weather[0].mainInfo.degree > 0){
                     temp.append("+")
                 }

@@ -4,15 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp.*
-import com.example.weatherapp.network.NetworkRepositoryInterface
+import com.example.weatherapp.network.NetworkRepository
+import javax.inject.Inject
 
-class CommonWeatherInfoFragmentViewModel(var networkRepository: NetworkRepositoryInterface) : ViewModel() {
+class CommonWeatherInfoFragmentViewModel @Inject constructor(
+    private val networkRepository: NetworkRepository
+) : ViewModel() {
 
-    val weatherList: LiveData<List<WeatherModel>>
-        get() = _weatherList
-    private var _weatherList = networkRepository.getFromNetwork(MutableLiveData(), "")
+    val searchByNameWeatherLiveData: LiveData<WeatherModel>
+        get() = _searchByNameWeatherLiveData
+    private var _searchByNameWeatherLiveData = SingleLiveEvent<WeatherModel>()
 
-    fun onClickFindWeatherInfo(cityName: String){
-        _weatherList = networkRepository.getFromNetwork(MutableLiveData(), cityName)
+    val errorEventFromResponse: LiveData<Boolean>
+        get() = _errorEventFromResponse
+    private var _errorEventFromResponse = MutableLiveData<Boolean>()
+
+    fun errorIsShown() {
+        _errorEventFromResponse.value = false
+    }
+
+    fun onClickFindWeatherInfo(cityName: String) {
+        networkRepository.getFromNetwork(
+            _searchByNameWeatherLiveData,
+            cityName,
+            _errorEventFromResponse
+        )
     }
 }

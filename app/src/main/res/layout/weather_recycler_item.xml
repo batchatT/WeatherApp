@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="city"
+            type="String" />
+    <variable
+            name="degree"
+            type="String" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool = "http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -12,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/marginTop20"
         android:gravity="start"
-        android:text="Copenhagen"
         android:textColor="@color/black"
         android:textSize="@dimen/textSize30"
+        android:text="@{city}"
         android:layout_marginStart="@dimen/marginStart20"
         app:layout_constraintEnd_toStartOf="@id/degree_text"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,10 +35,10 @@
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="16"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:gravity="end"
+        android:text="@{degree}"
         app:layout_constraintBottom_toBottomOf="@id/city_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/city_text"
@@ -35,3 +46,4 @@
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

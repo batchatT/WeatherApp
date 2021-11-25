@@ -1,5 +1,6 @@
 package com.example.weatherapp.commonWeather
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,24 +8,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.*
 import com.example.weatherapp.databinding.FragmentCommonWeatherInfoBinding
-import com.example.weatherapp.network.WeatherNetworkRepository
+import javax.inject.Inject
 
+
+private const val WEATHER_INFO_KEY = "Weather"
 
 class CommonWeatherInfoFragment : Fragment() {
 
-    private lateinit var commonWeatherFragmentViewModel: CommonWeatherInfoFragmentViewModel
+    @Inject
+    lateinit var commonWeatherFragmentViewModelFactory:  CommonWeatherInfoViewModelFactory
 
-    private lateinit var adapter: WeatherAdapter
+    private val commonWeatherFragmentViewModel: CommonWeatherInfoFragmentViewModel by viewModels {
+        commonWeatherFragmentViewModelFactory
+    }
+
+    private val adapter by lazy {
+        WeatherAdapter(mutableListOf()).apply {
+            setOnWeatherClickListener(object : WeatherAdapter.OnWeatherListener {
+                override fun onWeatherClick(weather: WeatherModel) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(
+                        WEATHER_INFO_KEY,
+                        weather
+                    )
+                    this@CommonWeatherInfoFragment.findNavController()
+                        .navigate(R.id.action_commonWeatherInfo_to_detailedWeatherInfo, bundle)
+                }
+            })
+        }
+    }
 
     private lateinit var binding: FragmentCommonWeatherInfoBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        commonWeatherFragmentViewModel = CommonWeatherInfoFragmentViewModel(WeatherNetworkRepository())
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as WeatherApplication).appComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -33,7 +56,6 @@ class CommonWeatherInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        adapter = WeatherAdapter()
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -42,32 +64,26 @@ class CommonWeatherInfoFragment : Fragment() {
             false
         )
 
-        binding.findCityButton.setOnClickListener {
-            commonWeatherFragmentViewModel.onClickFindWeatherInfo(binding.findCityEdit.text.toString())
-        }
-
         setBinding()
 
-        commonWeatherFragmentViewModel.weatherList.observe(viewLifecycleOwner, {
-            commonWeatherFragmentViewModel.weatherList.value?.let { adapter.setItems(it) }
+        commonWeatherFragmentViewModel.searchByNameWeatherLiveData.observe(viewLifecycleOwner, {
+            adapter.updateItem(it)
         })
 
-        adapter.setOnWeatherClickListener(object: WeatherAdapter.OnWeatherListener {
-            override fun onWeatherClick(position: Int) {
-                val bundle = Bundle()
-                bundle.putParcelable("Weather",
-                    commonWeatherFragmentViewModel.weatherList.value?.get(position)
-                )
-                this@CommonWeatherInfoFragment.findNavController()
-                    .navigate(R.id.action_commonWeatherInfo_to_detailedWeatherInfo, bundle)
-            }
-
+        commonWeatherFragmentViewModel.errorEventFromResponse.observe(viewLifecycleOwner, {
+            ErrorFromResponseDialog().show(childFragmentManager, ErrorFromResponseDialog.TAG)
+            commonWeatherFragmentViewModel.errorIsShown()
         })
+        Log.d("CommonFragment", "nken")
+
 
         return binding.root
     }
 
-    private fun setBinding(){
+
+
+
+    private fun setBinding() {
         binding.commonWeatherInfoViewModel = commonWeatherFragmentViewModel
 
         binding.weatherRecycler.adapter = adapter
@@ -75,6 +91,10 @@ class CommonWeatherInfoFragment : Fragment() {
         binding.weatherRecycler.layoutManager = LinearLayoutManager(context)
 
         binding.lifecycleOwner = this.activity
+
+        binding.findCityButton.setOnClickListener {
+            commonWeatherFragmentViewModel.onClickFindWeatherInfo(binding.findCityEdit.text.toString())
+        }
     }
 
 }
