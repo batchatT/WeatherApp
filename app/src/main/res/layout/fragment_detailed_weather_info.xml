@@ -6,7 +6,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DetailedWeatherInfoFragment">
+        tools:context=".DetailedWeatherInfoFragment"
+        android:background="@drawable/weather_background">
 
         <TextView
             android:id="@+id/city_text"
@@ -14,6 +15,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize50"
+
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +44,7 @@
             android:layout_marginTop="@dimen/marginTop30"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize40"
+            android:layout_marginStart="@dimen/marginStart20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/temperature"
@@ -55,6 +58,7 @@
             android:layout_marginTop="@dimen/marginTop30"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize40"
+            android:layout_marginStart="@dimen/marginStart20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/humidity"
@@ -69,6 +73,7 @@
             android:layout_marginTop="@dimen/marginTop30"
             android:textColor="@color/black"
             android:textSize="@dimen/textSize40"
+            android:layout_marginStart="@dimen/marginStart20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pressure"

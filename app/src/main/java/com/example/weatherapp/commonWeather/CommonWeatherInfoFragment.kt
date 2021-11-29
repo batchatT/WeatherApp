@@ -71,11 +71,11 @@ class CommonWeatherInfoFragment : Fragment() {
         })
 
         commonWeatherFragmentViewModel.errorEventFromResponse.observe(viewLifecycleOwner, {
-            ErrorFromResponseDialog().show(childFragmentManager, ErrorFromResponseDialog.TAG)
-            commonWeatherFragmentViewModel.errorIsShown()
+            if (it) {
+                ErrorFromResponseDialog().show(childFragmentManager, ErrorFromResponseDialog.TAG)
+                commonWeatherFragmentViewModel.errorIsShown()
+            }
         })
-        Log.d("CommonFragment", "nken")
-
 
         return binding.root
     }

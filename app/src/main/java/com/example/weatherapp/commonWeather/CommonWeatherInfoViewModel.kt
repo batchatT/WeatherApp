@@ -16,18 +16,18 @@ class CommonWeatherInfoFragmentViewModel @Inject constructor(
     private var _searchByNameWeatherLiveData = SingleLiveEvent<WeatherModel>()
 
     val errorEventFromResponse: LiveData<Boolean>
-        get() = _errorEventFromResponse
-    private var _errorEventFromResponse = MutableLiveData<Boolean>()
+        get() = _errorLiveEventFromResponse
+    private var _errorLiveEventFromResponse = MutableLiveData<Boolean>()
 
     fun errorIsShown() {
-        _errorEventFromResponse.value = false
+        _errorLiveEventFromResponse.value = false
     }
 
     fun onClickFindWeatherInfo(cityName: String) {
         networkRepository.getFromNetwork(
             _searchByNameWeatherLiveData,
             cityName,
-            _errorEventFromResponse
+            _errorLiveEventFromResponse
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.example.weatherapp.network
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.weatherapp.WeatherModel
 import com.example.weatherapp.commonWeather.SingleLiveEvent
@@ -7,10 +8,14 @@ import retrofit2.*
 import javax.inject.Inject
 
 class WeatherNetworkRepository @Inject constructor(
-    private val retrofit: NetworkApiInterface
+    private val networkApi: NetworkApiInterface
 ) : NetworkRepository {
 
     private val weatherList = arrayListOf<WeatherModel>()
+
+    init{
+        Log.d("WeatherRepo", "Init")
+    }
 
     override fun getFromNetwork(
         weatherLiveEvent: SingleLiveEvent<WeatherModel>,
@@ -33,7 +38,7 @@ class WeatherNetworkRepository @Inject constructor(
         errorEventFromResponse: MutableLiveData<Boolean>
     ) {
         if (cityName.isNotEmpty()) {
-            retrofit.getWeatherData(cityName).enqueue(
+            networkApi.getWeatherData(cityName).enqueue(
                 object : Callback<WeatherModel> {
                     override fun onResponse(
                         call: Call<WeatherModel>,
@@ -42,6 +47,8 @@ class WeatherNetworkRepository @Inject constructor(
                         if (response.isSuccessful && response.body()?.weather?.isEmpty() == false) {
                             response.body()?.let { weatherLiveEvent.value = it }
                             weatherLiveEvent.value?.let { weatherList.add(it) }
+                        } else {
+                            errorEventFromResponse.value = true
                         }
                     }
 

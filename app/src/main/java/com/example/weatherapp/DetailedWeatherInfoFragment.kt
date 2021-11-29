@@ -33,7 +33,7 @@ class DetailedWeatherInfoFragment : Fragment() {
             val weather = bundle.getParcelable<WeatherModel>(WEATHER_BUNDLE_KEY)
             val temp = StringBuilder("")
             weather?.let{
-                if(weather.weather[0].mainInfo.degree > 0){
+                if(weather.weather.first().mainInfo.degree > 0){
                     temp.append("+")
                 }
                 temp.append(weather.weather[0].mainInfo.degree).append("°C")
