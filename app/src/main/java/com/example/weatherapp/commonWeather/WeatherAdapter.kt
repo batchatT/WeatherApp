@@ -4,10 +4,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.R
 import com.example.weatherapp.WeatherModel
 import com.example.weatherapp.databinding.WeatherRecyclerItemBinding
-import kotlin.text.StringBuilder
 
 
 class WeatherAdapter(private var data: MutableList<WeatherModel>) :

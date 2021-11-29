@@ -8,7 +8,8 @@ import javax.inject.Inject
 private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
 class Retrofit @Inject constructor() : RetrofitProvider{
-    override fun <T> provideRetrofit(service : Class<T>): T {
+
+    override fun <T> provideService(service : Class<T>): T {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)

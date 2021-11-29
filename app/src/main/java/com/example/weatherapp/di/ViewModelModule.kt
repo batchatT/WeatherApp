@@ -8,5 +8,4 @@ import dagger.Module
 abstract class ViewModelModule {
 
     abstract fun provideViewModelFactory(factory: CommonWeatherInfoViewModelFactory): ViewModelProvider.Factory
-
 }

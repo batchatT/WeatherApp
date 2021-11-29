@@ -1,7 +1,6 @@
 package com.example.weatherapp.network
 
-import retrofit2.Retrofit
-
 interface RetrofitProvider {
-    fun <T> provideRetrofit(service : Class<T>): T
+
+    fun <T> provideService(service : Class<T>): T
 }

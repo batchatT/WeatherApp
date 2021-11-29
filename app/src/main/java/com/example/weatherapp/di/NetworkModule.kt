@@ -10,5 +10,4 @@ abstract class NetworkModule {
 
     @Binds
     abstract fun provideNetwork(networkRepository: WeatherNetworkRepository): NetworkRepository
-
 }

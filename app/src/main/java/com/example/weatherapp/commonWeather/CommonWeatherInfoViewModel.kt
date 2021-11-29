@@ -26,8 +26,8 @@ class CommonWeatherInfoFragmentViewModel @Inject constructor(
     fun onClickFindWeatherInfo(cityName: String) {
         networkRepository.getFromNetwork(
             _searchByNameWeatherLiveData,
-            cityName,
-            _errorLiveEventFromResponse
+            _errorLiveEventFromResponse,
+            cityName
         )
     }
 }

@@ -2,26 +2,23 @@ package com.example.weatherapp.commonWeather
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp.*
 import com.example.weatherapp.databinding.FragmentCommonWeatherInfoBinding
+import com.example.weatherapp.utils.WEATHER_INFO_KEY
 import javax.inject.Inject
-
-
-private const val WEATHER_INFO_KEY = "Weather"
 
 class CommonWeatherInfoFragment : Fragment() {
 
     @Inject
-    lateinit var commonWeatherFragmentViewModelFactory:  CommonWeatherInfoViewModelFactory
+    lateinit var commonWeatherFragmentViewModelFactory: CommonWeatherInfoViewModelFactory
 
     private val commonWeatherFragmentViewModel: CommonWeatherInfoFragmentViewModel by viewModels {
         commonWeatherFragmentViewModelFactory
@@ -54,7 +51,7 @@ class CommonWeatherInfoFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
 
         binding = DataBindingUtil.inflate(
@@ -66,6 +63,12 @@ class CommonWeatherInfoFragment : Fragment() {
 
         setBinding()
 
+        observeLiveData()
+
+        return binding.root
+    }
+
+    private fun observeLiveData() {
         commonWeatherFragmentViewModel.searchByNameWeatherLiveData.observe(viewLifecycleOwner, {
             adapter.updateItem(it)
         })
@@ -76,11 +79,7 @@ class CommonWeatherInfoFragment : Fragment() {
                 commonWeatherFragmentViewModel.errorIsShown()
             }
         })
-
-        return binding.root
     }
-
-
 
 
     private fun setBinding() {

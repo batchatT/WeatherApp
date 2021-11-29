@@ -5,8 +5,9 @@ import com.example.weatherapp.WeatherModel
 import com.example.weatherapp.commonWeather.SingleLiveEvent
 
 interface NetworkRepository{
+
     fun getFromNetwork(weatherLiveEvent: SingleLiveEvent<WeatherModel>,
-                       cityName: String,
-                       errorEventFromResponse: MutableLiveData<Boolean>
+                       errorEventFromResponse: MutableLiveData<Boolean>,
+                       cityName: String
     )
 }

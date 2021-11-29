@@ -6,6 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NetworkApiInterface {
-    @GET("find?units=metric&appid=412061e5cfeec723840ae710170e8dfc")
-    fun getWeatherData(@Query("q") city: String): Call<WeatherModel>
+
+    @GET("find")
+    fun getWeatherData(
+        @Query("units") units: String,
+        @Query("appid") appId: String,
+        @Query("q") city: String
+    ): Call<WeatherModel>
 }
